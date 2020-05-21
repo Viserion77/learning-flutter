@@ -10,9 +10,7 @@ class DocExpiryApp extends StatelessWidget
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'DocExpire',
-      theme: new ThemeData(
-        primarySwatch: Colors.indigo,
-      ),
+      theme: new ThemeData.dark(),
       home: DocList(),
     );
   }
