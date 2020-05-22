@@ -84,6 +84,7 @@ class DocDetailState extends State<DocDetail> {
   // Delete doc
   void _deleteDoc(int id) async {
     int r = await widget.dbh.deleteDoc(widget.doc.id);
+    // ? Realizar identação corretamente
     Navigator.pop(context, true);
   }
 
@@ -100,6 +101,7 @@ class DocDetailState extends State<DocDetail> {
     if (widget.doc.id > -1) {
       debugPrint("_update->Doc Id: " + widget.doc.id.toString());
       widget.dbh.updateDoc(widget.doc);
+      // ? Realizar identação corretamente
       Navigator.pop(context, true);
     }
     else {
@@ -108,6 +110,7 @@ class DocDetailState extends State<DocDetail> {
         debugPrint("_insert->Doc Id: " + widget.doc.id.toString());
         widget.doc.id = (result != null) ? result + 1 : 1;
         widget.dbh.insertDoc(widget.doc);
+        // ? Realizar identação corretamente
         Navigator.pop(context, true);
       });
     }
@@ -125,6 +128,7 @@ class DocDetailState extends State<DocDetail> {
   }
 
   void showMessage(String message, [MaterialColor color = Colors.red]) {
+    // ? Realizar identação corretamente
     _scaffoldKey.currentState
         .showSnackBar(new SnackBar(backgroundColor: color, content: new Text(message)));
   }
@@ -200,6 +204,7 @@ class DocDetailState extends State<DocDetail> {
                       icon: new Icon(Icons.more_horiz),
                       tooltip: 'Choose date',
                       onPressed: (() {
+                        // ? Realizar identação corretamente
                         _chooseDate(context, expirationCtrl.text);
                       }),
                     )
@@ -210,6 +215,7 @@ class DocDetailState extends State<DocDetail> {
                   Row(children: <Widget>[
                     Expanded(child: Text('a: Alert @ 1.5 & 1 year(s)')),
                     Switch(
+                        // ? Realizar identação corretamente
                         value: fqYearCtrl, onChanged: (bool value) {
                       setState(() {
                         fqYearCtrl = value;
@@ -219,6 +225,7 @@ class DocDetailState extends State<DocDetail> {
                   Row(children: <Widget>[
                     Expanded(child: Text('b: Alert @ 6 months')),
                     Switch(
+                        // ? Realizar identação corretamente
                         value: fqHalfYearCtrl, onChanged: (bool value) {
                       setState(() {
                         fqHalfYearCtrl = value;
@@ -228,6 +235,7 @@ class DocDetailState extends State<DocDetail> {
                   Row(children: <Widget>[
                     Expanded(child: Text('c: Alert @ 3 months')),
                     Switch(
+                        // ? Realizar identação corretamente
                         value: fqQuarterCtrl, onChanged: (bool value) {
                       setState(() {
                         fqQuarterCtrl = value;
@@ -237,6 +245,7 @@ class DocDetailState extends State<DocDetail> {
                   Row(children: <Widget>[
                     Expanded(child: Text('d: Alert @ 1 month or less')),
                     Switch(
+                        // ? Realizar identação corretamente
                         value: fqMonthCtrl, onChanged: (bool value) {
                       setState(() {
                         fqMonthCtrl = value;
@@ -244,6 +253,7 @@ class DocDetailState extends State<DocDetail> {
                     }),
                   ]),
                   Container(
+                      // ? Realizar identação corretamente
                       padding: const EdgeInsets.only(left: 40.0, top: 20.0),
                       child: RaisedButton(
                         child: Text("Save"),

@@ -12,9 +12,11 @@ class Doc
   int fqQuarter;
   int fqMonth;
 
+  // ? Realizar identação corretamente
   Doc(this.title, this.expiration, this.fqYear,
       this.fqHalfYear, this.fqQuarter, this.fqMonth);
 
+  // ? Realizar identação corretamente
   Doc.withId(this.id, this.title, this.expiration, this.fqYear,
       this.fqHalfYear, this.fqQuarter, this.fqMonth);
 

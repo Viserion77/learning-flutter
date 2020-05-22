@@ -60,6 +60,7 @@ class DocListState extends State<DocList> {
   void _checkDate() {
     const secs = const Duration(seconds:10);
 
+    // ? Realizar identação corretamente
     new Timer.periodic(secs, (Timer t) {
       DateTime nw = DateTime.now();
 
@@ -138,6 +139,7 @@ class DocListState extends State<DocList> {
   ListView docListItems() {
     return ListView.builder(
       itemCount: count,
+      // ? Realizar identação corretamente
       itemBuilder: (BuildContext context, int position) {
         String dd = Val.GetExpiryStr(this.docs[position].expiration);
         String dl = (dd != "1") ? " days left" : " day left";
@@ -204,6 +206,7 @@ class DocListState extends State<DocList> {
               ]),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
+              // ? Realizar identação corretamente
               navigateToDetail(Doc.withId(-1, "", "", 1, 1, 1, 1));
             },
             tooltip: "Add new doc",
