@@ -9,9 +9,7 @@ import './docdetail.dart';
 
 // Menu item
 const menuReset = "Reset Local Data";
-List<String> menuOptions = const <String> [
-  menuReset
-];
+List<String> menuOptions = const <String>[menuReset];
 
 class DocList extends StatefulWidget {
   @override
@@ -32,49 +30,52 @@ class DocListState extends State<DocList> {
   Future getData() async {
     final dbFuture = dbh.initializeDb();
     dbFuture.then(
-      // result here is the actual reference to the database object
-      (result) {
-          final docsFuture = dbh.getDocs();
-          docsFuture.then(
-            // result here is the list of docs in the database
-            (result) {
-                if (result.length >= 0) {
-                  List<Doc> docList = List<Doc>();
-                  var count = result.length;
-                  for (int i = 0; i <= count - 1; i++) {
-                    docList.add(Doc.fromOject(result[i]));
-                  }
-                  setState(() {
-                    if (this.docs.length > 0) {
-                      this.docs.clear();
-                    }
+        // result here is the actual reference to the database object
+        (result) {
+      final docsFuture = dbh.getDocs();
+      docsFuture.then(
+          // result here is the list of docs in the database
+          (result) {
+        if (result.length >= 0) {
+          List<Doc> docList = List<Doc>();
+          var count = result.length;
+          for (int i = 0; i <= count - 1; i++) {
+            docList.add(Doc.fromOject(result[i]));
+          }
+          setState(() {
+            if (this.docs.length > 0) {
+              this.docs.clear();
+            }
 
-                    this.docs = docList;
-                    this.count = count;
-                  });
-                }
-              });
-        });
-  }
-
-  void _checkDate() {
-    const secs = const Duration(seconds:10);
-
-    // ? Realizar identação corretamente
-    new Timer.periodic(secs, (Timer t) {
-      DateTime nw = DateTime.now();
-
-      if (cDate.day != nw.day || cDate.month != nw.month || cDate.year != nw.year) {
-        getData();
-        cDate = DateTime.now();
-      }
+            this.docs = docList;
+            this.count = count;
+          });
+        }
+      });
     });
   }
 
-  void navigateToDetail(Doc doc) async {
-    bool r = await Navigator.push(context,
-        MaterialPageRoute(builder: (context) => DocDetail(doc))
+  void _checkDate() {
+    const secs = const Duration(seconds: 10);
+
+    new Timer.periodic(
+      secs,
+      (Timer t) {
+        DateTime nw = DateTime.now();
+
+        if (cDate.day != nw.day ||
+            cDate.month != nw.month ||
+            cDate.year != nw.year) {
+          getData();
+          cDate = DateTime.now();
+        }
+      },
     );
+  }
+
+  void navigateToDetail(Doc doc) async {
+    bool r = await Navigator.push(
+        context, MaterialPageRoute(builder: (context) => DocDetail(doc)));
 
     if (r == true) {
       getData();
@@ -99,11 +100,9 @@ class DocListState extends State<DocList> {
               child: new Text("OK"),
               onPressed: () {
                 Future f = _resetLocalData();
-                f.then(
-                        (result) {
-                      Navigator.of(context).pop();
-                    }
-                );
+                f.then((result) {
+                  Navigator.of(context).pop();
+                });
               },
             ),
           ],
@@ -114,19 +113,15 @@ class DocListState extends State<DocList> {
 
   Future _resetLocalData() async {
     final dbFuture = dbh.initializeDb();
-    dbFuture.then(
-      (result) {
-        final dDocs = dbh.deleteRows(DbHelper.tblDocs);
-        dDocs.then(
-          (result) {
-            setState(() {
-              this.docs.clear();
-              this.count = 0;
-            });
-          }
-        );
-      }
-    );
+    dbFuture.then((result) {
+      final dDocs = dbh.deleteRows(DbHelper.tblDocs);
+      dDocs.then((result) {
+        setState(() {
+          this.docs.clear();
+          this.count = 0;
+        });
+      });
+    });
   }
 
   void _selectMenu(String value) async {
@@ -139,8 +134,10 @@ class DocListState extends State<DocList> {
   ListView docListItems() {
     return ListView.builder(
       itemCount: count,
-      // ? Realizar identação corretamente
-      itemBuilder: (BuildContext context, int position) {
+      itemBuilder: (
+        BuildContext context,
+        int position,
+      ) {
         String dd = Val.GetExpiryStr(this.docs[position].expiration);
         String dl = (dd != "1") ? " days left" : " day left";
         return Card(
@@ -149,17 +146,18 @@ class DocListState extends State<DocList> {
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor:
-              (Val.GetExpiryStr(this.docs[position].expiration) != "0") ?
-              Colors.blue : Colors.red,
+                  (Val.GetExpiryStr(this.docs[position].expiration) != "0")
+                      ? Colors.blue
+                      : Colors.red,
               child: Text(
                 this.docs[position].id.toString(),
               ),
             ),
             title: Text(this.docs[position].title),
-            subtitle: Text(
-                Val.GetExpiryStr(this.docs[position].expiration) + dl +
-                    "\nExp: " + DateUtils.convertToDateFull(
-                    this.docs[position].expiration)),
+            subtitle: Text(Val.GetExpiryStr(this.docs[position].expiration) +
+                dl +
+                "\nExp: " +
+                DateUtils.convertToDateFull(this.docs[position].expiration)),
             onTap: () {
               navigateToDetail(this.docs[position]);
             },
@@ -182,32 +180,37 @@ class DocListState extends State<DocList> {
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(
-          title: Text("DocExpire"),
-          actions: <Widget>[
-            PopupMenuButton(
-              onSelected: _selectMenu,
-              itemBuilder: (BuildContext context) {
-                return menuOptions.map((String choice) {
-                  return PopupMenuItem<String>(
-                    value: choice,
-                    child: Text(choice),
-                  );
-                }).toList();
-              },
-            ),
-          ]
-      ),
+      appBar: AppBar(title: Text("DocExpire"), actions: <Widget>[
+        PopupMenuButton(
+          onSelected: _selectMenu,
+          itemBuilder: (BuildContext context) {
+            return menuOptions.map((String choice) {
+              return PopupMenuItem<String>(
+                value: choice,
+                child: Text(choice),
+              );
+            }).toList();
+          },
+        ),
+      ]),
       body: Center(
         child: Scaffold(
-          body: Stack(
-              children: <Widget>[
-                docListItems(),
-              ]),
+          body: Stack(children: <Widget>[
+            docListItems(),
+          ]),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              // ? Realizar identação corretamente
-              navigateToDetail(Doc.withId(-1, "", "", 1, 1, 1, 1));
+              navigateToDetail(
+                Doc.withId(
+                  -1,
+                  "",
+                  "",
+                  1,
+                  1,
+                  1,
+                  1,
+                ),
+              );
             },
             tooltip: "Add new doc",
             child: Icon(Icons.add),

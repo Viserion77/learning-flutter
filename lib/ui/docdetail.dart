@@ -11,9 +11,7 @@ import '../util/dbhelper.dart';
 
 // Menu item
 const menuDelete = "Delete";
-final List<String> menuOptions = const <String> [
-  menuDelete
-];
+final List<String> menuOptions = const <String>[menuDelete];
 
 class DocDetail extends StatefulWidget {
   Doc doc;
@@ -32,8 +30,8 @@ class DocDetailState extends State<DocDetail> {
   final int daysAhead = 5475; // 15 years in the future
 
   final TextEditingController titleCtrl = TextEditingController();
-  final TextEditingController expirationCtrl = MaskedTextController(
-      mask: '2000-00-00');
+  final TextEditingController expirationCtrl =
+      MaskedTextController(mask: '2000-00-00');
 
   bool fqYearCtrl = true;
   bool fqHalfYearCtrl = true;
@@ -44,12 +42,19 @@ class DocDetailState extends State<DocDetail> {
   // Initialization code
   void _initCtrls() {
     titleCtrl.text = widget.doc.title != null ? widget.doc.title : "";
-    expirationCtrl.text = widget.doc.expiration != null ? widget.doc.expiration : "";
+    expirationCtrl.text =
+        widget.doc.expiration != null ? widget.doc.expiration : "";
 
-    fqYearCtrl = widget.doc.fqYear != null ? Val.IntToBool(widget.doc.fqYear) : false;
-    fqHalfYearCtrl = widget.doc.fqHalfYear != null ? Val.IntToBool(widget.doc.fqHalfYear) : false;
-    fqQuarterCtrl = widget.doc.fqQuarter != null ? Val.IntToBool(widget.doc.fqQuarter) : false;
-    fqMonthCtrl = widget.doc.fqMonth != null ? Val.IntToBool(widget.doc.fqMonth) : false;
+    fqYearCtrl =
+        widget.doc.fqYear != null ? Val.IntToBool(widget.doc.fqYear) : false;
+    fqHalfYearCtrl = widget.doc.fqHalfYear != null
+        ? Val.IntToBool(widget.doc.fqHalfYear)
+        : false;
+    fqQuarterCtrl = widget.doc.fqQuarter != null
+        ? Val.IntToBool(widget.doc.fqQuarter)
+        : false;
+    fqMonthCtrl =
+        widget.doc.fqMonth != null ? Val.IntToBool(widget.doc.fqMonth) : false;
   }
 
   // Date Picker & Date functions
@@ -57,17 +62,18 @@ class DocDetailState extends State<DocDetail> {
     var now = new DateTime.now();
     var initialDate = DateUtils.convertToDate(initialDateString) ?? now;
 
-    initialDate = (initialDate.year >= now.year && initialDate.isAfter(now) ? initialDate : now);
+    initialDate = (initialDate.year >= now.year && initialDate.isAfter(now)
+        ? initialDate
+        : now);
 
     DatePicker.showDatePicker(context, showTitleActions: true,
         onConfirm: (date) {
-          setState(() {
-            DateTime dt = date;
-            String r = DateUtils.ftDateAsStr(dt);
-            expirationCtrl.text = r;
-          });
-        },
-        currentTime: initialDate);
+      setState(() {
+        DateTime dt = date;
+        String r = DateUtils.ftDateAsStr(dt);
+        expirationCtrl.text = r;
+      });
+    }, currentTime: initialDate);
   }
 
   // Upper Menu
@@ -84,12 +90,14 @@ class DocDetailState extends State<DocDetail> {
   // Delete doc
   void _deleteDoc(int id) async {
     int r = await widget.dbh.deleteDoc(widget.doc.id);
-    // ? Realizar identação corretamente
-    Navigator.pop(context, true);
+    Navigator.pop(
+      context,
+      true,
+    );
   }
 
   // Save doc
-  void _saveDoc () {
+  void _saveDoc() {
     widget.doc.title = titleCtrl.text;
     widget.doc.expiration = expirationCtrl.text;
 
@@ -101,17 +109,20 @@ class DocDetailState extends State<DocDetail> {
     if (widget.doc.id > -1) {
       debugPrint("_update->Doc Id: " + widget.doc.id.toString());
       widget.dbh.updateDoc(widget.doc);
-      // ? Realizar identação corretamente
-      Navigator.pop(context, true);
-    }
-    else {
+      Navigator.pop(
+        context,
+        true,
+      );
+    } else {
       Future<int> idd = widget.dbh.getMaxId();
       idd.then((result) {
         debugPrint("_insert->Doc Id: " + widget.doc.id.toString());
         widget.doc.id = (result != null) ? result + 1 : 1;
         widget.dbh.insertDoc(widget.doc);
-        // ? Realizar identação corretamente
-        Navigator.pop(context, true);
+        Navigator.pop(
+          context,
+          true,
+        );
       });
     }
   }
@@ -128,9 +139,12 @@ class DocDetailState extends State<DocDetail> {
   }
 
   void showMessage(String message, [MaterialColor color = Colors.red]) {
-    // ? Realizar identação corretamente
-    _scaffoldKey.currentState
-        .showSnackBar(new SnackBar(backgroundColor: color, content: new Text(message)));
+    _scaffoldKey.currentState.showSnackBar(
+      new SnackBar(
+        backgroundColor: color,
+        content: new Text(message),
+      ),
+    );
   }
 
   @override
@@ -150,20 +164,21 @@ class DocDetailState extends State<DocDetail> {
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
             title: Text(ttl != "" ? widget.doc.title : "New Document"),
-            actions: (ttl == "") ? <Widget>[]: <Widget>[
-              PopupMenuButton(
-                onSelected: _selectMenu,
-                itemBuilder: (BuildContext context) {
-                  return menuOptions.map((String choice) {
-                    return PopupMenuItem<String>(
-                      value: choice,
-                      child: Text(choice),
-                    );
-                  }).toList();
-                },
-              ),
-            ]
-        ),
+            actions: (ttl == "")
+                ? <Widget>[]
+                : <Widget>[
+                    PopupMenuButton(
+                      onSelected: _selectMenu,
+                      itemBuilder: (BuildContext context) {
+                        return menuOptions.map((String choice) {
+                          return PopupMenuItem<String>(
+                            value: choice,
+                            child: Text(choice),
+                          );
+                        }).toList();
+                      },
+                    ),
+                  ]),
         body: Form(
             key: _formKey,
             autovalidate: true,
@@ -173,7 +188,7 @@ class DocDetailState extends State<DocDetail> {
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 children: <Widget>[
-                  TextFormField (
+                  TextFormField(
                     inputFormatters: [
                       WhitelistingTextInputFormatter(RegExp("[a-zA-Z0-9 ]"))
                     ],
@@ -189,23 +204,27 @@ class DocDetailState extends State<DocDetail> {
                   Row(children: <Widget>[
                     Expanded(
                         child: TextFormField(
-                          controller: expirationCtrl,
-                          maxLength: 10,
-                          decoration: InputDecoration(
-                              icon: const Icon(Icons.calendar_today),
-                              hintText: 'Expiry date (i.e. ' + DateUtils.daysAheadAsStr(daysAhead) + ')',
-                              labelText: 'Expiry Date'
-                          ),
-                          keyboardType: TextInputType.number,
-                          validator: (val) => DateUtils.isValidDate(val) ? null :
-                            'Not a valid future date',
-                        )),
+                      controller: expirationCtrl,
+                      maxLength: 10,
+                      decoration: InputDecoration(
+                          icon: const Icon(Icons.calendar_today),
+                          hintText: 'Expiry date (i.e. ' +
+                              DateUtils.daysAheadAsStr(daysAhead) +
+                              ')',
+                          labelText: 'Expiry Date'),
+                      keyboardType: TextInputType.number,
+                      validator: (val) => DateUtils.isValidDate(val)
+                          ? null
+                          : 'Not a valid future date',
+                    )),
                     IconButton(
                       icon: new Icon(Icons.more_horiz),
                       tooltip: 'Choose date',
                       onPressed: (() {
-                        // ? Realizar identação corretamente
-                        _chooseDate(context, expirationCtrl.text);
+                        _chooseDate(
+                          context,
+                          expirationCtrl.text,
+                        );
                       }),
                     )
                   ]),
@@ -215,51 +234,49 @@ class DocDetailState extends State<DocDetail> {
                   Row(children: <Widget>[
                     Expanded(child: Text('a: Alert @ 1.5 & 1 year(s)')),
                     Switch(
-                        // ? Realizar identação corretamente
-                        value: fqYearCtrl, onChanged: (bool value) {
-                      setState(() {
-                        fqYearCtrl = value;
-                      });
-                    }),
+                        value: fqYearCtrl,
+                        onChanged: (bool value) {
+                          setState(() {
+                            fqYearCtrl = value;
+                          });
+                        }),
                   ]),
                   Row(children: <Widget>[
                     Expanded(child: Text('b: Alert @ 6 months')),
                     Switch(
-                        // ? Realizar identação corretamente
-                        value: fqHalfYearCtrl, onChanged: (bool value) {
-                      setState(() {
-                        fqHalfYearCtrl = value;
-                      });
-                    }),
+                        value: fqHalfYearCtrl,
+                        onChanged: (bool value) {
+                          setState(() {
+                            fqHalfYearCtrl = value;
+                          });
+                        }),
                   ]),
                   Row(children: <Widget>[
                     Expanded(child: Text('c: Alert @ 3 months')),
                     Switch(
-                        // ? Realizar identação corretamente
-                        value: fqQuarterCtrl, onChanged: (bool value) {
-                      setState(() {
-                        fqQuarterCtrl = value;
-                      });
-                    }),
+                        value: fqQuarterCtrl,
+                        onChanged: (bool value) {
+                          setState(() {
+                            fqQuarterCtrl = value;
+                          });
+                        }),
                   ]),
                   Row(children: <Widget>[
                     Expanded(child: Text('d: Alert @ 1 month or less')),
                     Switch(
-                        // ? Realizar identação corretamente
-                        value: fqMonthCtrl, onChanged: (bool value) {
-                      setState(() {
-                        fqMonthCtrl = value;
-                      });
-                    }),
+                        value: fqMonthCtrl,
+                        onChanged: (bool value) {
+                          setState(() {
+                            fqMonthCtrl = value;
+                          });
+                        }),
                   ]),
                   Container(
-                      // ? Realizar identação corretamente
                       padding: const EdgeInsets.only(left: 40.0, top: 20.0),
                       child: RaisedButton(
                         child: Text("Save"),
                         onPressed: _submitForm,
-                      )
-                  ),
+                      )),
                 ],
               ),
             )));

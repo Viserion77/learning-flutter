@@ -1,7 +1,6 @@
 import '../util/utils.dart';
 
-class Doc
-{
+class Doc {
   int id;
   String title;
   String expiration;
@@ -12,13 +11,24 @@ class Doc
   int fqQuarter;
   int fqMonth;
 
-  // ? Realizar identação corretamente
-  Doc(this.title, this.expiration, this.fqYear,
-      this.fqHalfYear, this.fqQuarter, this.fqMonth);
+  Doc(
+    this.title,
+    this.expiration,
+    this.fqYear,
+    this.fqHalfYear,
+    this.fqQuarter,
+    this.fqMonth,
+  );
 
-  // ? Realizar identação corretamente
-  Doc.withId(this.id, this.title, this.expiration, this.fqYear,
-      this.fqHalfYear, this.fqQuarter, this.fqMonth);
+  Doc.withId(
+    this.id,
+    this.title,
+    this.expiration,
+    this.fqYear,
+    this.fqHalfYear,
+    this.fqQuarter,
+    this.fqMonth,
+  );
 
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();

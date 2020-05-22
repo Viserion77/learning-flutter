@@ -45,8 +45,11 @@ class DbHelper {
   Future<Database> initializeDb() async {
     Directory d = await getApplicationDocumentsDirectory();
     String p = d.path + "/docexpire.db";
-    // ? Realizar identação corretamente
-    var db = await openDatabase(p, version: 1, onCreate: _createDb);
+    var db = await openDatabase(
+      p,
+      version: 1,
+      onCreate: _createDb,
+    );
     return db;
   }
 
@@ -56,8 +59,7 @@ class DbHelper {
         "CREATE TABLE $tblDocs($docId INTEGER PRIMARY KEY, $docTitle TEXT, " +
             "$docExpiration TEXT, " +
             "$fqYear INTEGER, $fqHalfYear INTEGER, $fqQuarter INTEGER, " +
-            "$fqMonth INTEGER)"
-    );
+            "$fqMonth INTEGER)");
   }
 
   // Insert a new doc
@@ -67,8 +69,7 @@ class DbHelper {
     Database db = await this.db;
     try {
       r = await db.insert(tblDocs, doc.toMap());
-    }
-    catch (e) {
+    } catch (e) {
       debugPrint("insertDoc: " + e.toString());
     }
     return r;
@@ -77,7 +78,8 @@ class DbHelper {
   // Get the list of docs
   Future<List> getDocs() async {
     Database db = await this.db;
-    var r = await db.rawQuery("SELECT * FROM $tblDocs ORDER BY $docExpiration ASC");
+    var r =
+        await db.rawQuery("SELECT * FROM $tblDocs ORDER BY $docExpiration ASC");
     return r;
   }
 
@@ -85,7 +87,7 @@ class DbHelper {
   Future<List> getDoc(int id) async {
     Database db = await this.db;
     var r = await db.rawQuery(
-      "SELECT * FROM $tblDocs WHERE $docId = " + id.toString() + "" );
+        "SELECT * FROM $tblDocs WHERE $docId = " + id.toString() + "");
     return r;
   }
 
@@ -94,11 +96,13 @@ class DbHelper {
     List<String> p = payload.split("|");
     if (p.length == 2) {
       Database db = await this.db;
-      var r = await db.rawQuery(
-          "SELECT * FROM $tblDocs WHERE $docId = " + p[0] + " AND $docExpiration = '" + p[1] + "'" );
+      var r = await db.rawQuery("SELECT * FROM $tblDocs WHERE $docId = " +
+          p[0] +
+          " AND $docExpiration = '" +
+          p[1] +
+          "'");
       return r;
-    }
-    else
+    } else
       return null;
   }
 
@@ -106,8 +110,7 @@ class DbHelper {
   Future<int> getDocsCount() async {
     Database db = await this.db;
     var r = Sqflite.firstIntValue(
-        await db.rawQuery("SELECT COUNT(*) FROM $tblDocs")
-    );
+        await db.rawQuery("SELECT COUNT(*) FROM $tblDocs"));
     return r;
   }
 
@@ -115,16 +118,15 @@ class DbHelper {
   Future<int> getMaxId() async {
     Database db = await this.db;
     var r = Sqflite.firstIntValue(
-        await db.rawQuery("SELECT MAX(id) FROM $tblDocs")
-    );
+        await db.rawQuery("SELECT MAX(id) FROM $tblDocs"));
     return r;
   }
 
   // Update a doc
   Future<int> updateDoc(Doc doc) async {
     var db = await this.db;
-    var r = await db.update(tblDocs, doc.toMap(),
-        where: "$docId = ?", whereArgs: [doc.id]);
+    var r = await db
+        .update(tblDocs, doc.toMap(), where: "$docId = ?", whereArgs: [doc.id]);
     return r;
   }
 
@@ -142,4 +144,3 @@ class DbHelper {
     return r;
   }
 }
-
