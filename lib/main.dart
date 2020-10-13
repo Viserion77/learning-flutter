@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import './ui/doclist.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(DocExpiryApp());
 
-class MyApp extends StatelessWidget {
+class DocExpiryApp extends StatelessWidget
+{
   @override
   Widget build(BuildContext context) {
-    return Text('Hello world!');
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'DocExpire',
+      theme: new ThemeData.dark(),
+      home: DocList(),
+    );
   }
 }
