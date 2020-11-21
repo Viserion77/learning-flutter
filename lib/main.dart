@@ -1,17 +1,23 @@
+import 'package:bytebank/screens/transferencias/lista.dart';
 import 'package:flutter/material.dart';
-import './ui/doclist.dart';
 
-void main() => runApp(DocExpiryApp());
+void main() {
+  runApp(Bytebank());
+}
 
-class DocExpiryApp extends StatelessWidget
-{
+class Bytebank extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'DocExpire',
-      theme: new ThemeData.dark(),
-      home: DocList(),
+      theme: ThemeData(
+        primaryColor: Colors.green[900],
+        accentColor: Colors.blueAccent[700],
+        buttonTheme: ButtonThemeData(
+          buttonColor: Colors.blueAccent[700],
+          textTheme: ButtonTextTheme.primary,
+        ),
+      ),
+      home: ListaTransferencias(),
     );
   }
 }
