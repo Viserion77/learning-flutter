@@ -1,23 +1,22 @@
-import 'package:bytebank/screens/Dasboard.dart';
 import 'package:flutter/material.dart';
+import 'package:learning_flutter/screens/transfer/list.dart';
 
 void main() {
-  runApp(Bytebank());
+  runApp(
+    const LearnFlutter(),
+  );
 }
 
-class Bytebank extends StatelessWidget {
+class LearnFlutter extends StatelessWidget {
+  const LearnFlutter({
+    Key? key,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.green[900],
-        accentColor: Colors.blueAccent[700],
-        buttonTheme: ButtonThemeData(
-          buttonColor: Colors.blueAccent[700],
-          textTheme: ButtonTextTheme.primary,
-        ),
-      ),
-      home: DashBoard(),
+      theme: ThemeData.dark(),
+      home: TransferList(),
     );
   }
 }

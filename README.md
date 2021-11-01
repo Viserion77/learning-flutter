@@ -1,10 +1,26 @@
 # Branches:
- - [Alura/ByteBank](https://github.com/Viserion77/learning-fletter/tree/alura/bytebank)
- - [Senai/DocExpire](https://github.com/Viserion77/learning-fletter/tree/senai/docexpire)
+- [Senai/DocExpire](https://github.com/Viserion77/learning-fletter/tree/senai/docexpire)
 
-# bytebank
+# learning_flutter
 
 A new Flutter project.
+
+# starting
+- flutter create learning_flutter (use snake case)
+- configure the project structure
+    - in android studio press `ctrl+alt+shift+s`
+    - tab project settings, setup a project SDK, like a some `Android API 27 Plataform` (need a java version ^1.8.0)
+    - tab modules settings, setup a module SDK again
+- ### emulators
+on terminal
+- `flutter config --android-sdk {path_sdk(can find in android studio)}`
+- accept licences with `flutter doctor --android-licenses`
+- `flutter emulators --create` will create a flutter_emulator emulator hehe
+- `flutter emulators --launch flutter_emulator` to launch '-'
+### `flutter doctor` if all oks we can continues
+- `flutter run`
+All done mister
+
 
 ## Getting Started
 
