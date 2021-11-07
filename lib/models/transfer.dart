@@ -6,6 +6,6 @@ class Transfer {
 
   @override
   String toString() {
-    return 'Transfer $value $numberAccount';
+    return 'Transfer{value: $value, numberAccount: $numberAccount}';
   }
 }

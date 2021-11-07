@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learning_flutter/screens/transfer/list.dart';
+import 'package:learning_flutter/screens/home.dart';
 
 void main() {
   runApp(
@@ -16,7 +16,7 @@ class LearnFlutter extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: TransferList(),
+      home: const Home(),
     );
   }
 }

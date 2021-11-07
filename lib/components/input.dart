@@ -10,6 +10,7 @@ class Input extends StatelessWidget {
     String? errorText,
     Function? onTap,
     Function? onChanged,
+    TextInputType? keyboardType,
   })  : _controller = controller,
         _labelText = labelText,
         _hintText = hintText,
@@ -17,6 +18,7 @@ class Input extends StatelessWidget {
         _errorText = errorText,
         _onTap = onTap,
         _onChanged = onChanged,
+        _keyboardType = keyboardType,
         super(key: key);
 
   final TextEditingController _controller;
@@ -26,6 +28,7 @@ class Input extends StatelessWidget {
   final String? _errorText;
   final Function? _onTap;
   final Function? _onChanged;
+  final TextInputType? _keyboardType;
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +36,8 @@ class Input extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         controller: _controller,
-        onTap: () => _onTap!(),
-        onChanged: (value) => _onChanged!(value),
+        onTap: _onTap != null ? () => _onTap!() : null,
+        onChanged: _onChanged != null ? (value) => _onChanged!(value) : null,
         decoration: InputDecoration(
           icon: _icon != null ? Icon(_icon) : null,
           labelText: _labelText,
@@ -44,7 +47,7 @@ class Input extends StatelessWidget {
         style: const TextStyle(
           fontSize: 24.0,
         ),
-        keyboardType: TextInputType.number,
+        keyboardType: _keyboardType,
       ),
     );
   }

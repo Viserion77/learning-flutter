@@ -10,19 +10,19 @@ class TransferForm extends StatefulWidget {
 }
 
 class _TransferFormState extends State<TransferForm> {
-  final String _appBarTitle = 'criando Transferencia';
+  final String _appBarTitle = 'Create Transfer';
 
-  final String _numberAccountLabel = 'Numero da conta';
+  final String _numberAccountLabel = 'Account number';
   final String _numberAccountHint = '0';
   String? _numberAccountError;
-  final String _numberAccountErrorNull = 'Numero da conta não pode ser nulo';
+  final String _numberAccountErrorNull = 'Account number can\'t be null';
 
-  final String _valueInputLabel = 'Valor';
+  final String _valueInputLabel = 'Value';
   final String _valueInputHint = '0.0';
   String? _valueInputError;
-  final String _valueInputErrorNull = 'Valor não pode ser nulo';
+  final String _valueInputErrorNull = 'Value can\'t be null';
 
-  final String _confirmButtonText = 'Confirmar';
+  final String _confirmButtonText = 'Confirm';
 
   final TextEditingController _controllerNumberAccount =
       TextEditingController();
@@ -43,7 +43,8 @@ class _TransferFormState extends State<TransferForm> {
               hintText: _numberAccountLabel,
               labelText: _numberAccountHint,
               errorText: _numberAccountError,
-              onTap: () => _clearNumberAccountError(),
+              keyboardType: TextInputType.number,
+              onTap: _clearNumberAccountError,
               onChanged: (value) => _clearNumberAccountError(),
             ),
             Input(
@@ -52,7 +53,8 @@ class _TransferFormState extends State<TransferForm> {
               hintText: _valueInputHint,
               errorText: _valueInputError,
               icon: Icons.monetization_on,
-              onTap: () => _clearValueError(),
+              keyboardType: TextInputType.number,
+              onTap: _clearValueError,
               onChanged: (value) => _clearValueError(),
             ),
             ElevatedButton(
