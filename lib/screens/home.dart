@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learning_flutter/screens/contacts/list.dart';
-import 'package:learning_flutter/screens/transfer/list.dart';
+import 'package:learning_flutter/screens/transaction/list.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -19,81 +19,90 @@ class Home extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Image.asset('images/logo.jpg'),
           ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Material(
-                  color: Theme.of(context).primaryColor,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const ContactsList(),
-                        ),
-                      );
-                    },
-                    child: SizedBox(
-                      width: 152.0,
-                      height: 104.0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Icon(Icons.people),
-                            Text(
-                              'Contacts',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+          SizedBox(
+            height: 120.0,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _FutureIcon(
+                  futureIcon: Icons.monetization_on,
+                  featureName: 'Transfer',
+                  onTap: () => _showContactsList(context),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Material(
-                  color: Theme.of(context).primaryColor,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => TransferList(),
-                        ),
-                      );
-                    },
-                    child: SizedBox(
-                      width: 152.0,
-                      height: 104.0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Icon(Icons.monetization_on),
-                            Text(
-                              'Transfers',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                _FutureIcon(
+                  futureIcon: Icons.description,
+                  featureName: 'Transaction feed',
+                  onTap: () => _showTransactionsList(context),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showTransactionsList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => TransferList(),
+      ),
+    );
+  }
+
+  void _showContactsList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => const ContactsList(),
+      ),
+    );
+  }
+}
+
+class _FutureIcon extends StatelessWidget {
+  const _FutureIcon({
+    Key? key,
+    required IconData futureIcon,
+    required String featureName,
+    required Function onTap,
+  })  : _futureIcon = futureIcon,
+        _featureName = featureName,
+        _onTap = onTap,
+        super(key: key);
+
+  final IconData _futureIcon;
+  final String _featureName;
+  final Function _onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Material(
+        color: Theme.of(context).primaryColor,
+        child: InkWell(
+          onTap: () => _onTap(),
+          child: SizedBox(
+            width: 152.0,
+            height: 104.0,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(_futureIcon),
+                  Text(
+                    _featureName,
+                    style: const TextStyle(
+                      fontSize: 16.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

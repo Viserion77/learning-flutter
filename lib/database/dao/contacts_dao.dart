@@ -30,9 +30,9 @@ class ContactDao {
 
   Contact _toContact(Map<String, dynamic> row) {
     final Contact contact = Contact(
-      row[_id],
-      row[_name],
-      row[_accountNumber],
+      id: row[_id],
+      name: row[_name],
+      accountNumber: row[_accountNumber],
     );
     return contact;
   }

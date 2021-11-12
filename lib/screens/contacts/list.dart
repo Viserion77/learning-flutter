@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learning_flutter/database/dao/contacts_dao.dart';
 import 'package:learning_flutter/models/contacts.dart';
 import 'package:learning_flutter/screens/contacts/form.dart';
+import 'package:learning_flutter/screens/transaction/form.dart';
 
 class ContactsList extends StatefulWidget {
   const ContactsList({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _ContactsListState extends State<ContactsList> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contacts'),
+        title: const Text('Transfer'),
       ),
       body: FutureBuilder<List<Contact>>(
         future: ContactDao().findAll(),
@@ -32,6 +33,13 @@ class _ContactsListState extends State<ContactsList> {
 
                   return _ContactItem(
                     contact: contact,
+                    onClick: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => TransactionForm(contact),
+                        ),
+                      );
+                    },
                   );
                 },
               );
@@ -73,18 +81,20 @@ class _ContactsListState extends State<ContactsList> {
 }
 
 class _ContactItem extends StatelessWidget {
-  const _ContactItem({
-    Key? key,
-    required Contact contact,
-  })  : _contact = contact,
+  const _ContactItem(
+      {Key? key, required Contact contact, required Function onClick})
+      : _contact = contact,
+        _onClick = onClick,
         super(key: key);
 
   final Contact _contact;
+  final Function _onClick;
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        onTap: () => _onClick(),
         title: Text(
           _contact.name,
           style: const TextStyle(
